@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Compte index{% endblock %}
+
+{% block body %}
+    <h1>Compte index</h1>
+    <hr/>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('compte_new') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Créer un nouveau compte</a>
+
+    {% endif %}
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Nbre transcation</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for compte in comptes %}
+            <tr>
+                <td>{{ compte.id }}</td>
+                <td>{{ compte.name }}</td>
+                <td>{{ compte.transactions|length}}</td>
+                <td>{{ compte.type }}</td>
+                <td>
+                    <a href="{{ path('compte_show', {'id': compte.id}) }}" class="btn btn-secondary">Afficher</a>
+                    <a href="{{ path('compte_edit', {'id': compte.id}) }}" class="btn btn-dark">Editer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
